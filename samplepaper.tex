@@ -1,0 +1,97 @@
+% This is samplepaper.tex, a sample chapter demonstrating the
+% LLNCS macro package for Springer Computer Science proceedings;
+% Version 2.20 of 2017/10/04
+%
+\documentclass[runningheads]{llncs}
+%
+\usepackage{graphicx}
+% Used for displaying a sample figure. If possible, figure files should
+% be included in EPS format.
+%
+% If you use the hyperref package, please uncomment the following line
+% to display URLs in blue roman font according to Springer's eBook style:
+% \renewcommand\UrlFont{\color{blue}\rmfamily}
+\usepackage{fullpage}
+\usepackage{float}
+
+\begin{document}
+%
+\pagenumbering{gobble}
+\title{Reconhecimento de padrões (Perceptron)}
+%
+%\titlerunning{Abbreviated paper title}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+%
+\pagestyle{plain}
+\author{Autores: Gabrielle Cibyl da Hora; Marco Vallin \\ 
+Diciplina: Computação Natural \\
+Professor: Leandro Nunes de Castro} 
+%
+%\authorrunning{F. Author et al.}
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
+%
+\institute{PPGEEC - Programa de pós-graduação em Engenharia Elétrica e Computação. 
+Universidade Presbiteriana Mackenzie.}
+%
+\maketitle              % typeset the header of the contribution
+%
+\begin{abstract}
+O relatório de pesquisa propõe implementação, execução e análise. Utilizando algoritmo Perceptron e parâmetros pré-definidos identificamos o comportamento de classificação de redes neurais.
+
+\keywords{Python  \and Perceptron  \and Algoritmo Genético }
+\end{abstract}
+%
+%
+%\
+\section{Introdução}
+
+O Perceptron Multicamadas (Multi-Layer perceptron) é um classificador de rede neural de classificação simples e linear, ou seja, é um algoritmo que separa linearmente elementos de grupos que tenham características diferentes, e com base nessa separação prever a qual grupo pertencerá elementos não classificados previamente.
+
+\section{Algoritmo}
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.30]{fluxograma.jpg}
+\end{center}
+\caption{A figura representa o algoritmo genético executado} \label{fig1}
+\end{figure}
+
+Fluxo do algoritmo (exemplificado na Fig 1.):
+\begin{enumerate}
+	\item Iniciar com a entrada parametrizada pelo arquivo de entrada pré definido pela atividade.
+	\item Na fase de ativação, calcula-se os valores dos neurônios da camada oculta e dos neurônios da camada de saída
+	\item Aplica-se a mutação 1 (inverte o valor do elemento com o próximo a direita), ou mutação 2 (seleciona dois cromossomos aleatórios e troca).
+	\item Durante a fase de treinamento verifica os erros dos neurônios das camadas de saída e oculta, correção dos pesos e atualização.
+	\item Repetir a partir do item 2 até que melhore o critério de erro
+\end{enumerate}
+
+\section{Metodologia}
+
+\subsection{Perceptron}
+
+\subsection{Hiperparametrização do algoritmo}
+
+
+\subsection{Forma/medida de avaliação de desempenho}
+
+\subsection{Experimentos}
+
+
+O projeto consiste em ter um gene fixo e realizar diferentes experimentos com diversas combinações de parâmetros para identificação de desempenho, conforme especificado na sessão 3.2. 
+
+
+\section{Conclusão}
+
+%
+% ---- Bibliography ----
+%
+% BibTeX users should specify bibliography style 'splncs04'.
+% References will then be sorted and formatted in the correct style.
+%
+% \bibliographystyle{splncs04}
+% \bibliography{mybibliography}
+%
+
+\end{document}
