@@ -1,0 +1,120 @@
+---
+Formação Cientista de Dados - Prof. Fernando Amaral
+Deep Learning
+---
+
+```{r}
+#install.packages("h2o")
+library(h2o)
+library(readxl)
+library(arules)
+library(RSNNS)
+```
+Importamos o arquivo para visualização
+```{r}
+#uso interno
+options(warn=-1)
+#digitos <- read.csv(file.choose(), header=F)
+digitos <- read_excel(file.choose(), col_names = F)
+dim(digitos)
+head(digitos)
+View(digitos)
+
+digitos$label <- c(0,1,2,3,4,6,8,9)
+
+```
+Visualizamos alguns digitos
+```{r}
+dig1 = t(matrix(unlist(digitos[1,-121]), nrow = 10, byrow = F))
+dig1 = t(apply(dig1, 2, rev))
+dig1
+digitos[1,121]
+
+dig2 = t(matrix(unlist(digitos[2,-121]), nrow = 10, byrow = F))
+dig2 = t(apply(dig2, 2, rev))
+
+dig3 = t(matrix(unlist(digitos[3,-121]), nrow = 10, byrow = F))
+dig3 = t(apply(dig3, 2, rev))
+
+dig4 = t(matrix(unlist(digitos[4,-121]), nrow = 10, byrow = F))
+dig4 = t(apply(dig4, 2, rev))
+
+
+dig5 = t(matrix(unlist(digitos[5,-121]), nrow = 10, byrow = F))
+dig5 = t(apply(dig5, 2, rev))
+
+dig6 = t(matrix(unlist(digitos[6,-121]), nrow = 10, byrow = F))
+dig6 = t(apply(dig6, 2, rev))
+
+dig7 = t(matrix(unlist(digitos[7,-121]), nrow = 10, byrow = F))
+dig7 = t(apply(dig7, 2, rev))
+
+dig8 = t(matrix(unlist(digitos[8,-121]), nrow = 10, byrow = F))
+dig8 = t(apply(dig8, 2, rev))
+```
+Visualizamos as imagens
+```{r}
+#Executar com ctrl + shift + enter
+image(dig1,col=grey.colors(255))
+image(dig2,col=grey.colors(255))
+image(dig3,col=grey.colors(255))
+image(dig4,col=grey.colors(255))
+image(dig5,col=grey.colors(255))
+image(dig6,col=grey.colors(255))
+image(dig7,col=grey.colors(255))
+image(dig8,col=grey.colors(255))
+
+```
+Inicialização 
+```{r}
+h2o.init()
+treino <- h2o.importFile('train.csv.gz')
+teste <- h2o.importFile('test.csv.gz')
+
+treino <- as.h2o(digitos[1:6,])
+teste <- as.h2o(digitos[8,])
+
+treino <- digitos[1:6,]
+teste <- digitos[8,]
+
+
+dim(treino)
+dim(teste)
+head(treino)
+colnames(treino)
+#transforma a classe em fator
+treino[,121] <- as.factor(treino[,121])
+teste[,121] <- as.factor(teste[,121])
+
+```
+Modelo
+```{r}
+modelo <- h2o.deeplearning(x = colnames(treino[,1:120]),  y = "label",  training_frame = treino,  validation_frame = teste,  distribution = "AUTO",  activation = "RectifierWithDropout",  hidden = c(10),  sparse = TRUE, epochs = 20)
+plot(modelo)
+
+model <- mlp(x = treino[,1:120],  y = treino[,121], size = c(5), maxit = 20, initFunc = "Randomize_Weights", initFuncParams = c(-0.3, 0.3),
+  learnFunc = "Std_Backpropagation", learnFuncParams = c(0.2, 0),
+  updateFunc = "Topological_Order", updateFuncParams = c(0),
+  )
+
+teste = predict(model, digitos[,-121])
+
+
+mlp
+
+
+
+
+```
+Performance do modelo
+```{r}
+h2o.performance(modelo)
+```
+Fazemos um teste, prevendo um novo valor
+
+```{r}
+treino[1,121]
+pred <- h2o.predict(modelo, newdata = treino[1,1:120])
+pred$predict
+```
+
